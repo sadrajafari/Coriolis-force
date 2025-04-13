@@ -17,3 +17,4 @@ other important information.
 ### License
 
 See the <a href="https://github.com/phetsims/coriolis-force/blob/main/LICENSE" target="_blank">LICENSE</a>
+# Coriolis-force
