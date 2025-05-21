@@ -112,6 +112,16 @@ export default class EquationInput extends Node {
     this.domElement = domElement;
   }
 
+
+  updateText(newLatex) {
+    if (this.mathField) {
+      // Set the raw LaTeX for display only
+      this.mathField.latex(newLatex);
+      // Do NOT set this.property.value here!
+    }
+  }
+  
+
   getElementValue() {
     return this.mathField.latex()
   }
