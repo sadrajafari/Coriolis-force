@@ -1,6 +1,6 @@
 
 // import { DOM, Display, Input, VBox, Node, KeyboardUtils } from '../../../../scenery/js/imports.js';
-import { DOM, Display, Input, VBox, Node, KeyboardUtils, Property } from 'scenerystack';
+import { DOM, Display, Input, VBox, Node, KeyboardUtils, Property, Emitter } from 'scenerystack';
 // import DOM from '../../../../scenery/js/nodes/DOM.js';
 // import Display from '../../../../scenery/js/display/Display.js';
 // import Input from '../../../../scenery/js/input/Input.js';
@@ -47,7 +47,7 @@ export default class EquationInput extends Node {
 
     super(options);
 
-    this.valueSubmittedEmitter = new phet.axon.Emitter();
+    this.valueSubmittedEmitter = new Emitter();
     this.writeToEquation = function (text) {
       this.mathField.write(text)
       // options.model[options.equation]= mathField.latex().replaceAll('\\theta',' t').replaceAll('\\omega',' o');
@@ -57,29 +57,27 @@ export default class EquationInput extends Node {
     const domElement = parentDomElement;
     this.domElement = options.dom;
     const mathField = window.MathQuill.getInterface(2).MathField(domElement, {
-      // console.log(getInterface)
-      // console.log(MathQuill)
+      
       // const mathField = MathQuill.getInterface(2).MathField(domElement, {
       handlers: {
         edit: function () {
-          // console.log("balkjsdflajsdbfaklsjdf")
-          // console.log(options.equation)
+          
           options.model[options.equation] = mathField.latex().replaceAll('\\theta', ' t').replaceAll('\\Omega', ' o').replaceAll('\\pi', ' p').replaceAll('\\e', ' e');
-          // console.log(mathField.latex())
+          
           options.model.validEqs = options.verifyEq(options, options.model);
           setTimeout(() => post(options.model.name, "Changed " + options.model.value_changed, options.model.xProp.value, options.model.yProp.value, options.model.v_xProp.value, options.model.v_yProp.value, options.model.omegaProp.value, options.model.xEQ, options.model.yEQ, options.model.v_xEQ, options.model.v_yEQ), 10)
         },
 
       }
     });
-    // console.log("hereee",mathField)
+  
     this.mathField = mathField;
     mathField.write(options.initialText);
 
     const equationInputNode = new Node();
     this.equationInputNode = domElement;
-    // const domElementDOM = new phet.scenery.DOM( domElement ) ;
-    const domElementDOM = new phet.scenery.DOM(domElement, { allowInput: true });
+    
+    const domElementDOM = new DOM(domElement, { allowInput: true });
 
     equationInputNode.addChild(domElementDOM);
     this.addChild(equationInputNode);

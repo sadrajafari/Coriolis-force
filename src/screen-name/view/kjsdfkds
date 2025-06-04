@@ -101,7 +101,7 @@ const updateThreeJS = setInterval(function() {
           this.scene.remove(line);
           line = new THREE.Line(geometry, material);
           line.computeLineDistances()
-          console.log(line.computeLineDistances())
+          // console.log(line.computeLineDistances())
           this.scene.add(line);
           return line;
         };

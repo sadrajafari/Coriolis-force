@@ -2,20 +2,25 @@ import { ScreenView, ScreenViewOptions } from "scenerystack/sim";
 import { SimModel } from "../model/SimModel.js";
 import { InfoButton, ResetAllButton } from "scenerystack/scenery-phet";
 
-import { Circle, Color, DOM, HBox, Rectangle, RichText, Text, VBox, Node } from "scenerystack/scenery";
+import { Circle, Color, DOM, HBox, Rectangle, RichText, Text, VBox, Node, Display, Font } from "scenerystack/scenery";
 import * as THREE from 'three';
-import { HSlider, Panel, Vector2, Range, DerivedProperty, RoundToggleButton, Property, RectangularToggleButton, RectangularPushButton, Bounds2, ToggleSwitch, CarouselComboBox } from "scenerystack";
+import { HSlider, Panel, Vector2, Range, DerivedProperty, RoundToggleButton, Property, ToggleSwitch, CarouselComboBox } from "scenerystack";
+// @ts-ignore
 import EquationInput from './EquationInput.js';
+// @ts-ignore
 import { drawCoriolis, drawCen } from '../../common/makeGraphs.js';
+// @ts-ignore
 import { verifyEq } from '../../common/verifyEq.js';
-import * as d3 from 'd3';
+// @ts-ignore
+// import * as d3 from 'd3';
+// @ts-ignore
 import post from '../../common/postData.js';
 import DiscreteInfoDialog from "./DiscreteInfoDialog.js";
 
 export class SimScreenView extends ScreenView {
   domNode: any;
   disk: any;
-  model: CoriolisForceModel;
+  model: any;
   puckIRef: any;
   puckRefRef: any;
   diskRef: any;
@@ -45,21 +50,33 @@ export class SimScreenView extends ScreenView {
   lineRefTest: any;
   pathITest: any;
   lineITest: any;
+  // @ts-ignore
   refCenArrowDir: import("c:/Users/kaden/phetsims/chipper/node_modules/@types/three/index").Vector3;
+  // @ts-ignore
   refCenArrow: import("c:/Users/kaden/phetsims/chipper/node_modules/@types/three/index").ArrowHelper;
   maxRefCen: any;
   maxRefCor: any;
+  // @ts-ignore
   refCorArrowDir: import("c:/Users/kaden/phetsims/chipper/node_modules/@types/three/index").Vector3;
+  // @ts-ignore
   refCorArrow: import("c:/Users/kaden/phetsims/chipper/node_modules/@types/three/index").ArrowHelper;
+  // @ts-ignore
   refCorArrowDir2: import("c:/Users/kaden/phetsims/chipper/node_modules/@types/three/index").Vector3;
+  // @ts-ignore
   refCorArrow2: import("c:/Users/kaden/phetsims/chipper/node_modules/@types/three/index").ArrowHelper;
+  // @ts-ignore
   testCenArrowDir: import("c:/Users/kaden/phetsims/chipper/node_modules/@types/three/index").Vector3;
+  // @ts-ignore
   testCenArrow: import("c:/Users/kaden/phetsims/chipper/node_modules/@types/three/index").ArrowHelper;
   maxTestCor: any;
+  // @ts-ignore
   testCorArrowDir: import("c:/Users/kaden/phetsims/chipper/node_modules/@types/three/index").Vector3;
+  // @ts-ignore
   testCorArrow: import("c:/Users/kaden/phetsims/chipper/node_modules/@types/three/index").ArrowHelper;
   maxTestCen: any;
+  // @ts-ignore
   arrowGroup: import("c:/Users/kaden/phetsims/chipper/node_modules/@types/three/index").Group;
+  // @ts-ignore
   corCen: import("c:/Users/aggies/Desktop/phetsims/chipper/node_modules/@types/three/index").Group;
   selectedRunProperty: Property<string>;
   runHistory: Array<{
@@ -70,8 +87,8 @@ export class SimScreenView extends ScreenView {
     v_ydotLatex: any;
     v_xdotLatex: any;
     ydotLatex: any;
-    xdotLatex: any; x: any; y: any; v_x: any; v_y: any; omega: any 
-}>;
+    xdotLatex: any; x: any; y: any; v_x: any; v_y: any; omega: any
+  }>;
   updateComboBox: (runs: { name: string; index: number; }[] | string[]) => void;
   vdotLatex: any;
   xdotLatex: any;
@@ -117,8 +134,8 @@ export class SimScreenView extends ScreenView {
     const testTangentialVelocityGraph = document.createElement('div');
     document.body.appendChild(testTangentialVelocityGraph)
 
-    this.rootNode = new phet.scenery.Node();
-    const displayGraphs = new phet.scenery.Display(this.rootNode);
+    this.rootNode = new Node();
+    const displayGraphs = new Display(this.rootNode);
     displayGraphs.updateOnRequestAnimationFrame();
     displayGraphs.resizeOnWindowResize();
     document.body.appendChild(displayGraphs.domElement);
@@ -135,35 +152,11 @@ export class SimScreenView extends ScreenView {
 
 
 
-    // refTangentialVelocityGraph.id = 'variableSim-distTest';
-    // this.refTangentialVelocityGraph = drawCen(model.graphData, model.graphLen, 'variableSim-ydot', 'test', this.graphSize, model.graphDataTest, model.graphLenTest);
-    // this.yScalevy = this.refYdotGraph.y
-    // this.xScalevy = this.refYdotGraph.x
-    // this.refYdotGraph = new phet.scenery.DOM(this.refYdotGraph.node);
-    // this.addChild(this.refYdotGraph);
-
-    // testDistanceCenterGraph.id = 'staticSim-x';
-    // this.testDistanceCenterGraph = drawCoriolis(model.graphData, model.graphLen, 'staticSim-x', 'reference', this.graphSize, model.graphDataTest, model.graphLenTest);
-    // this.yScalex = this.refXGraph.y
-    // this.xScalex = this.refXGraph.x
-    // this.refXGraph = new phet.scenery.DOM(this.refXGraph.node);
-    // // this.addChild(this.refXGraph);
-
-    // testTangentialVelocityGraph.id = 'variableSim-y';
-    // this.testTangentialVelocityGraph = drawCen(model.graphData, model.graphLen, 'variableSim-y', 'test', this.graphSize, model.graphDataTest, model.graphLenTest);
-    // this.yScaley = this.refYGraph.y
-    // this.xScaley = this.refYGraph.x
-    // this.refYGraph = new phet.scenery.DOM(this.refYGraph.node);
-
-
-
-
-
-    // this.refDistanceCenterGraph.bounds = new Bounds2(0, 0, this.graphSize, this.graphSize);
+  
 
     this.refDistanceCenterGraph.node.offsetWidth = 250
     this.refDistanceCenterGraph.node.offsetHeight = 250
-    this.refDistanceCenterGraph = new phet.scenery.DOM(this.refDistanceCenterGraph.node);
+    this.refDistanceCenterGraph = new DOM(this.refDistanceCenterGraph.node);
 
     this.refDistanceCenterGraph.element.children[9].setAttribute('cx', this.xScaleD(0));
     this.refDistanceCenterGraph.element.children[9].setAttribute('cy', this.yScaleD(model.graphData.getCor(0)));
@@ -177,7 +170,7 @@ export class SimScreenView extends ScreenView {
 
     this.refTangentialVelocityGraph.node.offsetWidth = 250
     this.refTangentialVelocityGraph.node.offsetHeight = 250
-    this.refTangentialVelocityGraph = new phet.scenery.DOM(this.refTangentialVelocityGraph.node);
+    this.refTangentialVelocityGraph = new DOM(this.refTangentialVelocityGraph.node);
     this.refTangentialVelocityGraph.element.children[9].setAttribute('cx', this.xScaleTv(0));
     this.refTangentialVelocityGraph.element.children[9].setAttribute('cy', this.yScaleTv(model.graphData.getCen(0)));
     if (model.graphDataTest.data.length > 10) {
@@ -197,25 +190,21 @@ export class SimScreenView extends ScreenView {
     const buttonY = new Property<boolean>(false);
     const buttonOmega = new Property<boolean>(false);
 
-    const simSpeedSlider = new HSlider(model.simSpeedProp, new Range(0, Number(3)), { helpText: 'Simulation Speed' });
-    const panelSizer = new Rectangle(10, 10, 200, 30);
-    const sliderGap = new Rectangle(0, 0, 0, 10);
+    const simSpeedSlider = new HSlider(model.simSpeedProp, new Range(0, Number(3)));
+ 
 
     const massSlider = new HSlider(model.massProp, new Range(0, 10));
     const mass = new RichText("<em>m</em>");
-    const k = new RichText("<em>k</em>");
-    const x = new RichText("<em>x<sub>0</sub></em>")
-    const y = new RichText("<em>y<sub>0</sub></em>")
-    const v_x = new RichText("<em>v<sub>0x</sub></em>");
-    const v_y = new RichText("<em>v<sub>0y</sub></em>");
-    const omega = new RichText("<em>Ω</em>")
+
+    const x = new RichText("init. pos. (<em>x<sub>0</sub></em>)")
+    const y = new RichText("init. pos. (<em>y<sub>0</sub></em>)")
+    const v_x = new RichText("init. vel. (<em>v<sub>0x</sub></em>)");
+    const v_y = new RichText("init. vel. (<em>v<sub>0y</sub></em>)");
+    const omega = new RichText("ang. vel. (<em>Ω</em>)")
 
     const constantNames = new VBox({
       align: "left", children: [
-        // mass,
-        // new Rectangle(0, 0, 0, massSlider.height - mass.height + 7),
-        // k,
-        // new Rectangle(0, 0, 0, massSlider.height - mass.height + 7),
+        
         x,
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 7),
         y,
@@ -227,14 +216,11 @@ export class SimScreenView extends ScreenView {
         omega
       ]
     })
-    // console.log("YYYYPROP", model.yProp.value)
+  
 
     const constantSliders = new VBox({
       align: "center", children: [
-        // massSlider,
-        // new Rectangle(0, 0, 0, 10),
-        // new HSlider(model.kProp, new Range(0, 10)),
-        // new Rectangle(0, 0, 0, 10),
+        
         new HSlider(model.xProp, new Range(-175, 175)),
         new Rectangle(0, 0, 0, 10),
         new HSlider(model.yProp, new Range(-175, 175)),
@@ -247,37 +233,29 @@ export class SimScreenView extends ScreenView {
       ]
     })
     model.yProp.value = model.y;
-    // console.log("YYYYPROP", model.yProp.value)
+    
 
-    var toggleRadius = 13;
+    const toggleRadius = 13;
     const buttonVBoxConstants = new VBox({
       children: [
-        // new Rectangle(0, 0, 0, massSlider.height - mass.height),
-        // new RoundToggleButton(buttonMass, false, true, { radius: toggleRadius }),
-        // new RichText('✎'),
-
-        // new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
-        // new RoundToggleButton(buttonFriction, false, true, { radius: toggleRadius }),
-        // new RichText('✎'),
-
-        // new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
-        new RoundToggleButton(buttonX, false, true, { radius: toggleRadius, content: new phet.scenery.Text('✎', { fontSize: 120, maxWidth: 15 }) }),
-        // new RichText('✎'),
+        
+        new RoundToggleButton(buttonX, false, true, { radius: toggleRadius, content: new Text('✎', { fontSize: 120, maxWidth: 15 }) }),
+        
 
         new Rectangle(0, 0, 0, simSpeedSlider.height - mass.height + 6),
-        new RoundToggleButton(buttonY, false, true, { radius: toggleRadius, content: new phet.scenery.Text('✎', { fontSize: 120, maxWidth: 15 }) }),
-        // new RichText('✎'),
+        new RoundToggleButton(buttonY, false, true, { radius: toggleRadius, content: new Text('✎', { fontSize: 120, maxWidth: 15 }) }),
+        
 
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 6),
-        new RoundToggleButton(buttonV_x, false, true, { radius: toggleRadius, content: new phet.scenery.Text('✎', { fontSize: 120, maxWidth: 15 }) }),
-        // new RichText('✎'),
+        new RoundToggleButton(buttonV_x, false, true, { radius: toggleRadius, content: new Text('✎', { fontSize: 120, maxWidth: 15 }) }),
+        
 
         new Rectangle(0, 0, 0, simSpeedSlider.height - mass.height + 6),
-        new RoundToggleButton(buttonV_y, false, true, { radius: toggleRadius, content: new phet.scenery.Text('✎', { fontSize: 120, maxWidth: 15 }) }),
-        // new RichText('✎'),
+        new RoundToggleButton(buttonV_y, false, true, { radius: toggleRadius, content: new Text('✎', { fontSize: 120, maxWidth: 15 }) }),
+       
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 6),
-        new RoundToggleButton(buttonOmega, false, true, { radius: toggleRadius, content: new phet.scenery.Text('✎', { fontSize: 120, maxWidth: 15 }) }),
-        // new RichText('✎'),
+        new RoundToggleButton(buttonOmega, false, true, { radius: toggleRadius, content: new Text('✎', { fontSize: 120, maxWidth: 15 }) }),
+        
 
 
       ]
@@ -286,33 +264,24 @@ export class SimScreenView extends ScreenView {
     const constantMeasure = new VBox({
       align: "left", children: [
         new Rectangle(0, 0, 70, 0),
-        // new phet.scenery.Text(new DerivedProperty([model.massProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
-        // new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
-        // new phet.scenery.Text(new DerivedProperty([model.kProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
-
-        // new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
-        new phet.scenery.Text(new DerivedProperty([model.xProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
+        
+        new Text(new DerivedProperty([model.xProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
-        new phet.scenery.Text(new DerivedProperty([model.yProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
+        new Text(new DerivedProperty([model.yProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
 
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
-        new phet.scenery.Text(new DerivedProperty([model.v_xProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
-        // new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
+        new Text(new DerivedProperty([model.v_xProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
+        
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
-        new phet.scenery.Text(new DerivedProperty([model.v_yProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
+        new Text(new DerivedProperty([model.v_yProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
-        new phet.scenery.Text(new DerivedProperty([model.omegaProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
+        new Text(new DerivedProperty([model.omegaProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
       ]
     })
 
     const measureText = new VBox({
       align: "left", children: [
-        // new RichText("<span style='font-family: Roman;'>kg</span>"),
-        // new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
-        // new RichText("<span style='font-family: Roman;'>kg</span>"),
-        // new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
-        // new RichText("<span style='font-family: Roman;'>1/m</span>"),
-        // new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
+      
         new RichText("<span style='font-family: Roman;'>m</span>"),
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
         new RichText("<span style='font-family: Roman;'>m</span>"),
@@ -345,7 +314,7 @@ export class SimScreenView extends ScreenView {
     const speedPanel = new Panel(new VBox({
       align: "center", children: [new RichText("Components"), new Rectangle(0, 0, 350, 20), new HBox({
         align: "center", children: [
-          new RichText('simSpeed'), simSpeedSlider, new phet.scenery.Text(new DerivedProperty([model.simSpeedProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
+          new RichText('simSpeed'), simSpeedSlider, new Text(new DerivedProperty([model.simSpeedProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
           new Rectangle(0, 0, 20, 50),
           resetAllButton
         ]
@@ -452,7 +421,7 @@ export class SimScreenView extends ScreenView {
         xdotField.mathField.focus()
         focusedEq[0][0] = model.xEQ
         focusedEq[0][1] = xdotField
-        // console.log('xdot detected')
+    
       }
     })
     const ydotBox = new HBox({ preferredWidth: 30, children: [ydotField] })
@@ -462,7 +431,7 @@ export class SimScreenView extends ScreenView {
         ydotField.mathField.focus()
         focusedEq[0][0] = model.yEQ
         focusedEq[0][1] = ydotField
-        // console.log('ydot detected')
+        
 
       }
     })
@@ -474,7 +443,7 @@ export class SimScreenView extends ScreenView {
         v_xdotField.mathField.focus()
         focusedEq[0][0] = model.v_xEQ
         focusedEq[0][1] = v_xdotField
-        // console.log('v_xdot detected')
+       
 
       }
     })
@@ -485,7 +454,7 @@ export class SimScreenView extends ScreenView {
         v_ydotField.mathField.focus()
         focusedEq[0][0] = model.v_yEQ
         focusedEq[0][1] = v_ydotField
-        // console.log('v_ydot detected')
+        
 
       }
     })
@@ -503,39 +472,39 @@ export class SimScreenView extends ScreenView {
     const xdotPrime = document.createElement('span');
     xdotPrime.innerHTML = '<span style="position: relative; font-family: sans-serif; font-style: italic;">x=<span style="position: absolute; top: -0.35em; left: 0.09em;">&middot;</span><span style="position: absolute; top: -0.3em; left: 0.55em; font-size: 0.9em;">′</span></span>';
     xdotPrime.style.fontSize = `${this.graphSize / 9}px`
-    const xdotPrimeDOM = new phet.scenery.DOM((xdotPrime));
+    const xdotPrimeDOM = new DOM((xdotPrime));
 
 
     const ydotPrime = document.createElement('span');
     ydotPrime.innerHTML = '<span style="position: relative; font-family: sans-serif; font-style: italic;">y=<span style="position: absolute; top: -0.35em; left: 0.09em;">&middot;</span><span style="position: absolute; top: -0.3em; left: 0.55em; font-size: 0.9em;">′</span></span>';
     ydotPrime.style.fontSize = `${this.graphSize / 9}px`
-    const ydotPrimeDOM = new phet.scenery.DOM((ydotPrime));
+    const ydotPrimeDOM = new DOM((ydotPrime));
 
     const vxPrime = document.createElement('span');
     vxPrime.innerHTML = '<span style="position: relative; font-family: sans-serif; font-style: italic;">v<sub>x</sub>=<span style="position: absolute; top: -0.3em; left: 0.55em; font-size: 0.9em;">′</span></span>';
     vxPrime.style.fontSize = `${this.graphSize / 9}px`
-    const vxPrimeDOM = new phet.scenery.DOM((vxPrime));
+    const vxPrimeDOM = new DOM((vxPrime));
 
     const vyPrime = document.createElement('span');
     vyPrime.innerHTML = '<span style="position: relative; font-family: sans-serif; font-style: italic;">v<sub>y</sub>=<span style="position: absolute; top: -0.3em; left: 0.55em; font-size: 0.9em;">′</span></span>';
     vyPrime.style.fontSize = `${this.graphSize / 9}px`
-    const vyPrimeDOM = new phet.scenery.DOM((vyPrime));
+    const vyPrimeDOM = new DOM((vyPrime));
 
     const xdot = document.createElement('span');
     xdot.innerHTML = '<span style="position: relative; font-family: sans-serif; font-style: italic;">x=<span style="position: absolute; top: -0.35em; left: 0.09em;">&middot;</span><span style="position: absolute; top: -0.3em; left: 0.55em; font-size: 0.9em;"></span></span>';
     xdot.style.fontSize = `${this.graphSize / 9}px`
-    const xdotlabelDOM = new phet.scenery.DOM((xdot));
+    const xdotlabelDOM = new DOM((xdot));
 
 
     const ydot = document.createElement('span');
     ydot.innerHTML = '<span style="position: relative; font-family: sans-serif; font-style: italic;">y=<span style="position: absolute; top: -0.35em; left: 0.09em;">&middot;</span><span style="position: absolute; top: -0.3em; left: 0.55em; font-size: 0.9em;"></span></span>';
     ydot.style.fontSize = `${this.graphSize / 9}px`
-    const ydotlabelDOM = new phet.scenery.DOM((ydot));
+    const ydotlabelDOM = new DOM((ydot));
 
     const vx = document.createElement('span');
     vx.innerHTML = '<span style="position: relative; font-family: sans-serif; font-style: italic;">v<sub>x</sub>=<span style="position: absolute; top: -0.3em; left: 0.55em; font-size: 0.9em;"></span></span>';
     vx.style.fontSize = `${this.graphSize / 9}px`
-    const vxlabelDOM = new phet.scenery.DOM((vx));
+    const vxlabelDOM = new DOM((vx));
 
     const vy = document.createElement('span');
     vy.innerHTML = '<span style="position: relative; font-family: sans-serif; font-style: italic;">v<sub>y</sub>=<span style="position: absolute; top: -0.3em; left: 0.55em; font-size: 0.9em;"></span></span>';
@@ -577,6 +546,7 @@ export class SimScreenView extends ScreenView {
     this.addChild(refPanel)
 
     const infoDialog = new DiscreteInfoDialog(
+      // @ts-ignore
       options && options.tandem
         ? options.tandem.createTandem('infoDialog')
         : undefined
@@ -613,48 +583,12 @@ export class SimScreenView extends ScreenView {
         ]
       }), { fill: new Color("#d3d3d3"), maxWidth: 230 })
 
-    // switchEquationProp.lazyLink(() => { model.coriolisEq = switchEquationProp.value; this.reset(); 
-    //   if (model.coriolisEq){
-    // equationPanel = new Panel(new VBox({
-    //   align: "center", children: [
-    //     //eqation switch here
-    //     new RichText("Test Equations"),
-    //     new Rectangle(0, 0, 350, 15),
-    //     // new HBox({align: "center", children: [new RichText("Coriolis Eq"),equationSwitch,new RichText("Projectile Eq")]}),
-    //     new HBox({ align: "center", children: [xdotPrimeDOM, xdotBox] }),
-    //     new HBox({ children: [new Rectangle(0, 0, 0, 10)] }),
-    //     new HBox({ align: "center", children: [ydotPrimeDOM, ydotBox] }),
-    //     new HBox({ children: [new Rectangle(0, 0, 0, 10)] }),
-    //     new HBox({ align: "center", children: [vxPrimeDOM, v_xdotBox] }),
-    //     new HBox({ children: [new Rectangle(0, 0, 0, 10)] }),
-    //     new HBox({ align: "center", children: [vyPrimeDOM, v_ydotBox] }),
-    //   ]
-    // }), { fill: new Color("#d3d3d3"), maxWidth: 230 })
-    // } else{
-    // equationPanel = new Panel(new VBox({
-    //   align: "center", children: [
-    //     //eqation switch here
-    //     new RichText("Test Equations"),
-    //     new Rectangle(0, 0, 350, 15),
-    //     // new HBox({align: "center", children: [new RichText("Coriolis Eq"),equationSwitch,new RichText("Projectile Eq")]}),
-    //     new HBox({ align: "center", children: [xdotlabelDOM, xdotBox] }),
-    //     new HBox({ children: [new Rectangle(0, 0, 0, 10)] }),
-    //     new HBox({ align: "center", children: [ydotlabelDOM, ydotBox] }),
-    //     new HBox({ children: [new Rectangle(0, 0, 0, 10)] }),
-    //     new HBox({ align: "center", children: [vxlabelDOM, v_xdotBox] }),
-    //     new HBox({ children: [new Rectangle(0, 0, 0, 10)] }),
-    //     new HBox({ align: "center", children: [vylabelDOM, v_ydotBox] }),
-    //   ]
-    // }), { fill: new Color("#d3d3d3"), maxWidth: 230 })
-    // };console.log(model.coriolisEq);this.scene.remove(equationPanel);this.addChild(equationPanel);equationPanel.leftTop = new Vector2(0, constantPanel.rightBottom.y + 10)})
-
-
-
+  
     this.addChild(equationPanel)
 
 
     const outOfRangeText = new RichText("Exceeded disc boundary", {
-      font: new phet.scenery.Font({ size: 16, weight: 'bold' }),
+      font: new Font({ size: 16, weight: 'bold' }),
       fill: 'red'
     });
     this.addChild(outOfRangeText);
@@ -691,15 +625,15 @@ export class SimScreenView extends ScreenView {
     const referenceBall = new RichText("Reference")
     this.addChild(redBall)
     this.addChild(referenceBall)
-    redBall.leftTop = new phet.dot.Vector2(1100, 10)
-    referenceBall.leftTop = new phet.dot.Vector2(1120, 5)
+    redBall.leftTop = new Vector2(1100, 10)
+    referenceBall.leftTop = new Vector2(1120, 5)
 
     const blueBall = new Circle(7, { fill: new Color("blue") })
     const testBall = new RichText("Test")
     this.addChild(blueBall)
     this.addChild(testBall)
-    blueBall.leftTop = new phet.dot.Vector2(1250, 10)
-    testBall.leftTop = new phet.dot.Vector2(1270, 5)
+    blueBall.leftTop = new Vector2(1250, 10)
+    testBall.leftTop = new Vector2(1270, 5)
 
 
 
@@ -708,8 +642,8 @@ export class SimScreenView extends ScreenView {
     this.iOffset = -200;
     this.refOffset = 200;
 
-    const rootNode = new phet.scenery.Node();
-    const display = new phet.scenery.Display(rootNode);
+    const rootNode = new Node();
+    const display = new Display(rootNode);
     document.body.appendChild(display.domElement);
 
     // set up a scene with three.js
@@ -718,7 +652,8 @@ export class SimScreenView extends ScreenView {
     camera.position.set(0, 0, 0)
     camera.position.z = 1;
     const diskGeometry = new THREE.SphereGeometry(175, 32, 32);
-    var iceMaterial = new THREE.MeshBasicMaterial({
+
+    const iceMaterial = new THREE.MeshBasicMaterial({
       // map: new THREE.TextureLoader().load('/coriolis-force/js/coriolis-force/view/ta401-22.jpg'),
       map: new THREE.TextureLoader().load('/src/screen-name/view/6465863.jpg'),
       transparent: true,
@@ -821,8 +756,8 @@ export class SimScreenView extends ScreenView {
     const materialTestPathI = new THREE.LineBasicMaterial({ color: 0x0000ff, transparent: true });
 
     this.lineITest = new THREE.Line(geometryPathI, materialTestPathI);
-
-    this.maxRefCen = d3.max(this.model.graphData.data, (d) => Math.abs(d.cen))
+    // @ts-ignore
+    this.maxRefCen = d3.max(this.model.graphData.data, (d: { cen: number; }) => Math.abs(d.cen))
     this.refCenArrowDir = new THREE.Vector3(0, 0, 0);
     this.refCenArrowDir.normalize();
 
@@ -832,18 +767,21 @@ export class SimScreenView extends ScreenView {
     const hex = 0xff00ff;
 
     this.refCenArrow = new THREE.ArrowHelper(this.refCenArrowDir, puckIRef.position, 50, hex, 10, 20);
-
-    this.maxRefCor = d3.max(this.model.graphData.data, (d) => Math.abs(d.cor))
+    // @ts-ignore
+    this.maxRefCor = d3.max(this.model.graphData.data, (d: { cor: number; }) => Math.abs(d.cor))
     this.refCorArrowDir = new THREE.Vector3(0, 0, 0);
     this.refCorArrowDir.normalize();
+    // @ts-ignore
     this.refCorArrow = new THREE.ArrowHelper(this.refCorArrowDir, origin, length, "#027320", 10, 20);
     //////////////////////////////////////////////////////////////////
-    this.maxTestCen = d3.max(this.model.graphDataTest.data, (d) => Math.abs(d.cen))
+    // @ts-ignore
+    this.maxTestCen = d3.max(this.model.graphDataTest.data, (d: { cen: number; }) => Math.abs(d.cen))
     this.testCenArrowDir = new THREE.Vector3(0, 0, 0);
     this.testCenArrowDir.normalize();
     const originTest = puckIRef.position;
     this.testCenArrow = new THREE.ArrowHelper(this.testCenArrowDir, puckITest.position, 50, hex, 10, 20);
-    this.maxTestCor = d3.max(this.model.graphDataTest.data, (d) => Math.abs(d.cor))
+    // @ts-ignore
+    this.maxTestCor = d3.max(this.model.graphDataTest.data, (d: { cor: number; }) => Math.abs(d.cor))
     this.testCorArrowDir = new THREE.Vector3(0, 0, 0);
     this.testCorArrowDir.normalize();
     this.testCorArrow = new THREE.ArrowHelper(this.testCorArrowDir, originTest, length, hex, 10, 20);
@@ -894,13 +832,13 @@ export class SimScreenView extends ScreenView {
 
 
 
-    var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setClearColor(0x000000, 0);
     renderer.setClearAlpha(0);
     renderer.setSize(this.layoutBounds.maxX, this.layoutBounds.maxY);
     document.body.appendChild(renderer.domElement);
 
-    const domNode = new phet.scenery.DOM(renderer.domElement);
+    const domNode = new DOM(renderer.domElement);
     this.domNode = domNode;
 
     this.domNode._container.style.position = ""
@@ -1032,11 +970,15 @@ export class SimScreenView extends ScreenView {
     this.scene.remove(this.arrowGroup)
     this.arrowGroup = new THREE.Group()
     this.scene.add(this.arrowGroup)
-    // console.log(this.model.graphData)
-    this.maxRefCen = d3.max(this.model.graphData.data, (d) => Math.abs(d.cen))
-    this.maxRefCor = d3.max(this.model.graphData.data, (d) => Math.abs(d.cor))
-    this.maxTestCen = d3.max(this.model.graphDataTest.data, (d) => Math.abs(d.cen))
-    this.maxTestCor = d3.max(this.model.graphDataTest.data, (d) => Math.abs(d.cor))
+
+    // @ts-ignore
+    this.maxRefCen = d3.max(this.model.graphData.data, (d: { cen: number; }) => Math.abs(d.cen))
+    // @ts-ignore
+    this.maxRefCor = d3.max(this.model.graphData.data, (d: { cor: number; }) => Math.abs(d.cor))
+    // @ts-ignore
+    this.maxTestCen = d3.max(this.model.graphDataTest.data, (d: { cen: number; }) => Math.abs(d.cen))
+    // @ts-ignore
+    this.maxTestCor = d3.max(this.model.graphDataTest.data, (d: { cor: number; }) => Math.abs(d.cor))
 
     this.diskRef.rotation.z = 0;
 
@@ -1119,7 +1061,7 @@ export class SimScreenView extends ScreenView {
     this.xScaleD = this.refDistanceCenterGraph.x
     this.refDistanceCenterGraph.node.offsetWidth = 250
     this.refDistanceCenterGraph.node.offsetHeight = 250
-    this.refDistanceCenterGraph = new phet.scenery.DOM(this.refDistanceCenterGraph.node);
+    this.refDistanceCenterGraph = new DOM(this.refDistanceCenterGraph.node);
     this.refDistanceCenterGraph._container.style.transformOrigin = 'left top 0px';
     // this.addChild(this.refYdotGraph);
 
@@ -1129,7 +1071,7 @@ export class SimScreenView extends ScreenView {
     this.xScaleTv = this.refTangentialVelocityGraph.x
     this.refTangentialVelocityGraph.node.offsetWidth = 250
     this.refTangentialVelocityGraph.node.offsetHeight = 250
-    this.refTangentialVelocityGraph = new phet.scenery.DOM(this.refTangentialVelocityGraph.node);
+    this.refTangentialVelocityGraph = new DOM(this.refTangentialVelocityGraph.node);
     this.refTangentialVelocityGraph._container.style.transformOrigin = 'left top 0px';
 
     this.refTangentialVelocityGraph.leftTop = new Vector2(1225, 50)
@@ -1151,7 +1093,7 @@ export class SimScreenView extends ScreenView {
       this.refTangentialVelocityGraph.element.children[7].setAttribute('cx', this.xScaleTv(0));
       this.refTangentialVelocityGraph.element.children[7].setAttribute('cy', this.yScaleTv(this.model.graphDataTest.getCen(0)));
     }
-    
+
 
     this.model.timer = 0;
     // this.reset();
@@ -1229,11 +1171,15 @@ export class SimScreenView extends ScreenView {
     this.scene.remove(this.arrowGroup)
     this.arrowGroup = new THREE.Group()
     this.scene.add(this.arrowGroup)
-    // console.log(this.model.graphData)
-    this.maxRefCen = d3.max(this.model.graphData.data, (d) => Math.abs(d.cen))
-    this.maxRefCor = d3.max(this.model.graphData.data, (d) => Math.abs(d.cor))
-    this.maxTestCen = d3.max(this.model.graphDataTest.data, (d) => Math.abs(d.cen))
-    this.maxTestCor = d3.max(this.model.graphDataTest.data, (d) => Math.abs(d.cor))
+
+    // @ts-ignore
+    this.maxRefCen = d3.max(this.model.graphData.data, (d: { cen: number; }) => Math.abs(d.cen))
+    // @ts-ignore
+    this.maxRefCor = d3.max(this.model.graphData.data, (d: { cor: number; }) => Math.abs(d.cor))
+    // @ts-ignore
+    this.maxTestCen = d3.max(this.model.graphDataTest.data, (d: { cen: number; }) => Math.abs(d.cen))
+    // @ts-ignore
+    this.maxTestCor = d3.max(this.model.graphDataTest.data, (d: { cor: number; }) => Math.abs(d.cor))
 
     this.diskRef.rotation.z = 0;
 
@@ -1316,7 +1262,7 @@ export class SimScreenView extends ScreenView {
     this.xScaleD = this.refDistanceCenterGraph.x
     this.refDistanceCenterGraph.node.offsetWidth = 250
     this.refDistanceCenterGraph.node.offsetHeight = 250
-    this.refDistanceCenterGraph = new phet.scenery.DOM(this.refDistanceCenterGraph.node);
+    this.refDistanceCenterGraph = new DOM(this.refDistanceCenterGraph.node);
     this.refDistanceCenterGraph._container.style.transformOrigin = 'left top 0px';
     // this.addChild(this.refYdotGraph);
 
@@ -1326,7 +1272,7 @@ export class SimScreenView extends ScreenView {
     this.xScaleTv = this.refTangentialVelocityGraph.x
     this.refTangentialVelocityGraph.node.offsetWidth = 250
     this.refTangentialVelocityGraph.node.offsetHeight = 250
-    this.refTangentialVelocityGraph = new phet.scenery.DOM(this.refTangentialVelocityGraph.node);
+    this.refTangentialVelocityGraph = new DOM(this.refTangentialVelocityGraph.node);
     this.refTangentialVelocityGraph._container.style.transformOrigin = 'left top 0px';
 
     this.refTangentialVelocityGraph.leftTop = new Vector2(1225, 50)
@@ -1353,7 +1299,7 @@ export class SimScreenView extends ScreenView {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public step(dt: number): void {
     // Called every frame, with the time since the last frame in seconds
-    // console.log(dt)
+   
 
 
     if (!this.pause) {
@@ -1367,7 +1313,7 @@ export class SimScreenView extends ScreenView {
         this.model.timer += dt * this.model.simSpeed;
       }
       if (this.model.timer <= 10) {
-        // console.log(dt)
+        
         if (this.model.trailRefForceVectors && !this.model.trailTestForceVectors) {
           if (this.model.frameCount % 50 !== 0) {
             this.arrowGroup.remove(this.refCenArrow)
@@ -1412,7 +1358,7 @@ export class SimScreenView extends ScreenView {
 
 
         this.refCenArrowDir = new THREE.Vector3(this.puckIRef.position.x - this.disk.position.x, this.puckIRef.position.y - this.disk.position.y, 0);
-        let adjustedRefCenForce = Math.abs(this.model.graphData.getCen(this.model.timer) / this.maxRefCen)
+        const adjustedRefCenForce = Math.abs(this.model.graphData.getCen(this.model.timer) / this.maxRefCen)
         this.refCenArrowDir.normalize();
         const origin = this.puckIRef.position;
         const hex = 0xff00ff;
@@ -1420,6 +1366,7 @@ export class SimScreenView extends ScreenView {
         this.refCorArrowDir = new THREE.Vector3(this.model.graphData.getV_Y(this.model.timer), this.model.graphData.getV_X(this.model.timer), 0);
         this.refCorArrowDir.normalize();
         const magnitude = Math.abs(this.model.graphData.getCor(this.model.timer) / this.maxRefCor)
+        // @ts-ignore
         this.refCorArrow = new THREE.ArrowHelper(this.refCorArrowDir, origin, magnitude * 50, '#027320', magnitude * 20, magnitude * 10);
         this.refCorArrow.line.material = new THREE.LineDashedMaterial({
           color: '#027320',
@@ -1430,7 +1377,7 @@ export class SimScreenView extends ScreenView {
         })
         this.refCorArrow.line.computeLineDistances()
         this.testCenArrowDir = new THREE.Vector3(this.puckITest.position.x - this.disk.position.x, this.puckITest.position.y - this.disk.position.y, 0);
-        let adjustedTestCenForce = Math.abs(this.model.graphDataTest.getCen(this.model.timer) / this.maxTestCen)
+        const adjustedTestCenForce = Math.abs(this.model.graphDataTest.getCen(this.model.timer) / this.maxTestCen)
         this.testCenArrowDir.normalize();
         const originTest = this.puckITest.position;
         // const hex = 0xff00ff;
@@ -1438,6 +1385,7 @@ export class SimScreenView extends ScreenView {
         this.testCorArrowDir = new THREE.Vector3(this.model.graphDataTest.getV_Y(this.model.timer), this.model.graphDataTest.getV_X(this.model.timer), 0);
         this.testCorArrowDir.normalize();
         const magnitudeTest = Math.abs(this.model.graphDataTest.getCor(this.model.timer) / this.maxTestCor)
+        // @ts-ignore
         this.testCorArrow = new THREE.ArrowHelper(this.testCorArrowDir, originTest, magnitudeTest * 50, '#027320', magnitudeTest * 20, magnitudeTest * 10);
         this.testCorArrow.line.material = new THREE.LineDashedMaterial({
           color: '#027320',
@@ -1483,7 +1431,7 @@ export class SimScreenView extends ScreenView {
             this.puckIRef.position.x = this.model.graphData.getXI(this.model.timer) + this.iOffset;
             this.puckIRef.position.y = this.model.graphData.getYI(this.model.timer) * -1;
             this.pathIRef.quadraticCurveTo(bufferXI, bufferYI, this.puckIRef.position.x, this.puckIRef.position.y);
-            // console.log(this.pathRefRef.)
+           
 
             this.puckRefRef.position.x = this.model.graphData.getX(this.model.timer) + this.refOffset;
             this.puckRefRef.position.y = this.model.graphData.getY(this.model.timer) * -1;
@@ -1492,13 +1440,14 @@ export class SimScreenView extends ScreenView {
           }
 
           // Update geometries and lines
-          const updateLine = (path, line, material) => {
+          
+          const updateLine = (path: any, line: any, material: any) => {
             const points = path.getPoints();
             const geometry = new THREE.BufferGeometry().setFromPoints(points);
             this.scene.remove(line);
             line = new THREE.Line(geometry, material);
             line.computeLineDistances()
-            // console.log(line.computeLineDistances())
+           
             this.scene.add(line);
             return line;
           };
@@ -1528,10 +1477,7 @@ export class SimScreenView extends ScreenView {
           }
         };
 
-        // if (!this.passedStart) {
-        //   updatePuckAndPath();
-        //   this.passedStart = true;
-        // } else 
+       
         if (Math.sqrt(this.model.graphData.getX(this.model.timer) ** 2 + this.model.graphData.getY(this.model.timer) ** 2) <= 175) {
           this.refDistanceCenterGraph.element.children[9].setAttribute('cx', this.xScaleD(this.model.timer));
           this.refDistanceCenterGraph.element.children[9].setAttribute('cy', this.yScaleD(this.model.graphData.getCor(this.model.timer)));

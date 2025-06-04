@@ -1,5 +1,5 @@
 // import Constants from '../../common/BeadOnHoopConstants.js';
-import { DOM, Display, Input, VBox, Node, KeyboardUtils } from '../../../../scenery/js/imports.js';
+import { DOM, Display, Input, VBox, Node, KeyboardUtils, Emitter } from '../../../../scenery/js/imports.js';
 import Property from '../../../../axon/js/Property.js';
 // import post from '../../common/postData.js';
 // import {getInterface} from '../../common/mathquill.js'
@@ -38,7 +38,7 @@ export default class EquationInput extends Node {
 
     super( options );
 
-    this.valueSubmittedEmitter = new phet.axon.Emitter();
+    this.valueSubmittedEmitter = new Emitter();
     this.writeToEquation = function(text){
       this.mathField.write(text)
       
@@ -51,7 +51,7 @@ export default class EquationInput extends Node {
     // const mathField = MathQuill.getInterface(2).MathField(domElement, {
       handlers: {
         edit: function() {
-          console.log("here");
+          // console.log("here");
           options.model[options.equation] = mathField.latex().replaceAll('\\theta',' t').replaceAll('\\omega',' o');
           // console.log(mathField.latex())
           options.model.validEqs = options.verifyEq(options.thetaElement,options.velocityElement, options.model);
@@ -70,13 +70,13 @@ export default class EquationInput extends Node {
 
     const equationInputNode = new Node();
     this.equationInputNode = domElement;
-    const domElementDOM = new phet.scenery.DOM( domElement, { allowInput: true } ) ;
+    const domElementDOM = new DOM( domElement, { allowInput: true } ) ;
     equationInputNode.addChild( domElementDOM);
     this.addChild(equationInputNode);
     
 
     domElement.addEventListener( 'keyup', event => {
-      if ( event.code === phet.scenery.KeyboardUtils.KEY_ENTER ) {
+      if ( event.code === KeyboardUtils.KEY_ENTER ) {
 
         this.valueSubmittedEmitter.emit( mathField.latex() ); 
 

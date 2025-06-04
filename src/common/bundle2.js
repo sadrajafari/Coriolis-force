@@ -132,7 +132,7 @@ var Node = function () {
                 indent += indentString;
             }
 
-            console.log(indent + this.toString());
+            // console.log(indent + this.toString());
 
             // Print each child.
             for (var _i in this.children) {
@@ -683,7 +683,7 @@ var Parser = function () {
 
             // Throw an exception if there are still tokens remaining after parsing
             if (this.currentToken !== undefined) {
-                console.log(ast.printTree());
+                // console.log(ast.printTree());
                 throw "Parsing error: Expected end of input, but got " + this.currentToken.type + " " + this.currentToken.value;
             }
 

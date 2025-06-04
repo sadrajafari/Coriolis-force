@@ -3,9 +3,13 @@
 // import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 // import TModel from '../../../../joist/js/TModel.js';
 import { Property } from 'scenerystack';
+// @ts-ignore
 import { simData } from '../../common/simData.js';
+// @ts-ignore
 import { getGraphData } from '../../common/rk4testing.js'
+// @ts-ignore
 import post from '../../common/postData.js';
+// @ts-ignore
 import makeid from '../../common/randomStringGenerator.js';
 // import evaluatex from 'evaluatex';
 
@@ -18,7 +22,7 @@ export class SimModel {
   v_y: number;
   omega: number;
   kProp: Property<number>;
-  gravityProp: Property<number>;
+  // gravityProp: Property<number>;
   yProp: Property<number>;
   v_xProp: Property<number>;
   v_yProp: Property<number>;
@@ -27,9 +31,9 @@ export class SimModel {
   quadraticDrag: boolean;
   mass: number;
   gravity: number;
-  graphLen: number;
+  // graphLen: number;
   originalLen: number;
-  graphUpdateInterval: number;
+  // graphUpdateInterval: number;
   graphData: any;
   massProp: Property<number>;
   simSpeed: number;
@@ -49,12 +53,12 @@ export class SimModel {
   public yFunc;
   public v_xFunc;
   public v_yFunc;
-  public graphData: simData;
+  // public graphData: simData;
   public graphDataTest: simData;
   public graphLen: number;
   public graphUpdateInterval: number;
   public graphLenTest: number;
-  public prevX: number;
+  // public prevX: number;
   public resetDisable: boolean;
   coriolisEq: boolean;
   showForceVectors: boolean;
@@ -72,7 +76,7 @@ export class SimModel {
   trailTestForceVectorsProp: Property<boolean>;
 
 
-  public constructor(providedOptions: CoriolisForceModelOptions) {
+  public constructor() {
     this.frameCount = 1
     this.k = 0;
     this.gravity = 9.8;
@@ -123,8 +127,8 @@ export class SimModel {
     this.action = "start"
     // console.log(this.graphData)
     // console.log(this.y)
-    let prevX = this.x
-    let prevY = this.y
+    // let prevX = this.x
+    // let prevY = this.y
     this.xProp.link((val) => {
       if (Math.sqrt(Math.pow(val, 2) + Math.pow(this.yProp.value, 2)) > 175) {
         // console.log('it is still in the circle');
@@ -195,9 +199,13 @@ export class SimModel {
       // this.v_xEQ = '-\\frac{k}{m}\\cdot v_x\\cdot\\sqrt{v_x^2+v_y^2}'
       // this.v_yEQ = '-g-\\frac{k}{m}\\cdot v_y\\cdot\\sqrt{v_x^2+v_y^2}'
 
+      // @ts-ignore
       this.xFunc = evaluatex(this.xEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });
+      // @ts-ignore
       this.yFunc = evaluatex(this.yEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });
+      // @ts-ignore
       this.v_xFunc = evaluatex(this.v_xEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });
+      // @ts-ignore
       this.v_yFunc = evaluatex(this.v_yEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });
       // this.xFunc = globalThis.window.evaluatex(this.xEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });
       // this.yFunc = globalThis.window.evaluatex(this.yEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });
@@ -254,9 +262,13 @@ export class SimModel {
         this.graphDataTest.insert(0, 0, 0, 0, 0, 0, 0)
       } else {
         // console.log('VYYY:',this.v_yEQ)
+        // @ts-ignore
         this.xFunc = evaluatex(this.xEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });
+        // @ts-ignore
         this.yFunc = evaluatex(this.yEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });
+        // @ts-ignore
         this.v_xFunc = evaluatex(this.v_xEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });
+        // @ts-ignore
         this.v_yFunc = evaluatex(this.v_yEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });
         // this.xFunc = globalThis.window.evaluatex(this.xEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });
         // this.yFunc = globalThis.window.evaluatex(this.yEQ, { k: this.k, m: this.mass, g: this.gravity, o: this.omega, p: Math.PI, e: Math.E }, { latex: true });

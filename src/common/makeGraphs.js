@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+// import * as d3 from 'd3';
 
 
 export function drawCoriolis(globalData, graphLen, divID, type, size, testData, testLen) {
@@ -7,6 +7,7 @@ export function drawCoriolis(globalData, graphLen, divID, type, size, testData, 
   const margin = { top: size / 35, right: 30, bottom: size / (35 / 3), left: 60 };
   const width = size - margin.left - margin.right;
   const height = size - margin.top - margin.bottom;
+  
   const minX = d3.min(globalData.data, (d) => d.cor)
   const maxX = d3.max(globalData.data, (d) => d.cor)
   const minXTest = d3.min(testData.data, (d) => d.cor)
