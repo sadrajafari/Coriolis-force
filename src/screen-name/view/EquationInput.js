@@ -1,13 +1,7 @@
 
 // import { DOM, Display, Input, VBox, Node, KeyboardUtils } from '../../../../scenery/js/imports.js';
 import { DOM, Display, Input, VBox, Node, KeyboardUtils, Property, Emitter } from 'scenerystack';
-// import DOM from '../../../../scenery/js/nodes/DOM.js';
-// import Display from '../../../../scenery/js/display/Display.js';
-// import Input from '../../../../scenery/js/input/Input.js';
-// import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
-// import Node from '../../../../scenery/js/nodes/Node.js';
-// import KeyboardUtils from '../../../../scenery/js/accessibility/KeyboardUtils.js';
-// import Property from '../../../../axon/js/Property.js';
+
 import post from '../../common/postData.js';
 // import {getInterface} from '../../common/mathquill.js'
 // var MathQuill = require("../../common/mathquill.js");
@@ -65,7 +59,8 @@ export default class EquationInput extends Node {
           options.model[options.equation] = mathField.latex().replaceAll('\\theta', ' t').replaceAll('\\Omega', ' o').replaceAll('\\pi', ' p').replaceAll('\\e', ' e');
           
           options.model.validEqs = options.verifyEq(options, options.model);
-          setTimeout(() => post(options.model.name, "Changed " + options.model.value_changed, options.model.xProp.value, options.model.yProp.value, options.model.v_xProp.value, options.model.v_yProp.value, options.model.omegaProp.value, options.model.xEQ, options.model.yEQ, options.model.v_xEQ, options.model.v_yEQ), 10)
+          
+          setTimeout(() => post(options.model.name, "Changed " + options.equation, options.model.xProp.value, options.model.yProp.value, options.model.v_xProp.value, options.model.v_yProp.value, options.model.omegaProp.value, options.model.xEQ, options.model.yEQ, options.model.v_xEQ, options.model.v_yEQ), 10)
         },
 
       }

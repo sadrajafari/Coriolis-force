@@ -103,6 +103,7 @@ export class SimScreenView extends ScreenView {
   ydotLatex: any;
   v_xdotLatex: any;
   v_ydotLatex: any;
+  programmaticallySettingRun: boolean;
 
 
 
@@ -111,7 +112,7 @@ export class SimScreenView extends ScreenView {
     const resetAllButton = new ResetAllButton({
       listener: () => {
         this.interruptSubtreeInput();
-        model.reset();
+        model.reset("Reset");
         this.reset();
       },
       right: this.layoutBounds.maxX - 10,
@@ -152,7 +153,7 @@ export class SimScreenView extends ScreenView {
 
 
 
-  
+
 
     this.refDistanceCenterGraph.node.offsetWidth = 250
     this.refDistanceCenterGraph.node.offsetHeight = 250
@@ -191,7 +192,7 @@ export class SimScreenView extends ScreenView {
     const buttonOmega = new Property<boolean>(false);
 
     const simSpeedSlider = new HSlider(model.simSpeedProp, new Range(0, Number(3)));
- 
+
 
     const massSlider = new HSlider(model.massProp, new Range(0, 10));
     const mass = new RichText("<em>m</em>");
@@ -204,7 +205,7 @@ export class SimScreenView extends ScreenView {
 
     const constantNames = new VBox({
       align: "left", children: [
-        
+
         x,
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 7),
         y,
@@ -216,11 +217,11 @@ export class SimScreenView extends ScreenView {
         omega
       ]
     })
-  
+
 
     const constantSliders = new VBox({
       align: "center", children: [
-        
+
         new HSlider(model.xProp, new Range(-175, 175)),
         new Rectangle(0, 0, 0, 10),
         new HSlider(model.yProp, new Range(-175, 175)),
@@ -233,45 +234,49 @@ export class SimScreenView extends ScreenView {
       ]
     })
     model.yProp.value = model.y;
-    
+
 
     const toggleRadius = 13;
     const buttonVBoxConstants = new VBox({
       children: [
-        
+
         new RoundToggleButton(buttonX, false, true, { radius: toggleRadius, content: new Text('✎', { fontSize: 120, maxWidth: 15 }) }),
-        
+
 
         new Rectangle(0, 0, 0, simSpeedSlider.height - mass.height + 6),
         new RoundToggleButton(buttonY, false, true, { radius: toggleRadius, content: new Text('✎', { fontSize: 120, maxWidth: 15 }) }),
-        
+
 
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 6),
         new RoundToggleButton(buttonV_x, false, true, { radius: toggleRadius, content: new Text('✎', { fontSize: 120, maxWidth: 15 }) }),
-        
+
 
         new Rectangle(0, 0, 0, simSpeedSlider.height - mass.height + 6),
         new RoundToggleButton(buttonV_y, false, true, { radius: toggleRadius, content: new Text('✎', { fontSize: 120, maxWidth: 15 }) }),
-       
+
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 6),
         new RoundToggleButton(buttonOmega, false, true, { radius: toggleRadius, content: new Text('✎', { fontSize: 120, maxWidth: 15 }) }),
-        
+
 
 
       ]
     })
 
+    const x0_value = new Text(new DerivedProperty([model.xProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 })
+    const y0_value = new Text(new DerivedProperty([model.yProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 })
+
     const constantMeasure = new VBox({
       align: "left", children: [
         new Rectangle(0, 0, 70, 0),
-        
-        new Text(new DerivedProperty([model.xProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
+        x0_value,
+        // new Text(new DerivedProperty([model.xProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
-        new Text(new DerivedProperty([model.yProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
+        y0_value,
+        // new Text(new DerivedProperty([model.yProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
 
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
         new Text(new DerivedProperty([model.v_xProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
-        
+
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
         new Text(new DerivedProperty([model.v_yProp], (value) => { return String(Number(value).toFixed(2)) }), { fontSize: 20 }),
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
@@ -281,7 +286,7 @@ export class SimScreenView extends ScreenView {
 
     const measureText = new VBox({
       align: "left", children: [
-      
+
         new RichText("<span style='font-family: Roman;'>m</span>"),
         new Rectangle(0, 0, 0, massSlider.height - mass.height + 10),
         new RichText("<span style='font-family: Roman;'>m</span>"),
@@ -421,7 +426,7 @@ export class SimScreenView extends ScreenView {
         xdotField.mathField.focus()
         focusedEq[0][0] = model.xEQ
         focusedEq[0][1] = xdotField
-    
+
       }
     })
     const ydotBox = new HBox({ preferredWidth: 30, children: [ydotField] })
@@ -431,7 +436,7 @@ export class SimScreenView extends ScreenView {
         ydotField.mathField.focus()
         focusedEq[0][0] = model.yEQ
         focusedEq[0][1] = ydotField
-        
+
 
       }
     })
@@ -443,7 +448,7 @@ export class SimScreenView extends ScreenView {
         v_xdotField.mathField.focus()
         focusedEq[0][0] = model.v_xEQ
         focusedEq[0][1] = v_xdotField
-       
+
 
       }
     })
@@ -454,7 +459,7 @@ export class SimScreenView extends ScreenView {
         v_ydotField.mathField.focus()
         focusedEq[0][0] = model.v_yEQ
         focusedEq[0][1] = v_ydotField
-        
+
 
       }
     })
@@ -583,18 +588,48 @@ export class SimScreenView extends ScreenView {
         ]
       }), { fill: new Color("#d3d3d3"), maxWidth: 230 })
 
-  
+
     this.addChild(equationPanel)
 
 
+    // const outOfRangeText = new RichText("Exceeded disc boundary", {
+    //   font: new Font({ size: 16, weight: 'bold' }),
+    //   fill: 'red'
+    // });
+    // this.addChild(outOfRangeText);
+
     const outOfRangeText = new RichText("Exceeded disc boundary", {
-      font: new Font({ size: 16, weight: 'bold' }),
+      font: new Font({ size: 14, weight: 'bold' }),
       fill: 'red'
     });
-    this.addChild(outOfRangeText);
+
+    const outOfRangePanel = new Panel(outOfRangeText, {
+      fill: new Color('#ffdddd'),
+      stroke: 'red',
+      cornerRadius: 5,
+      xMargin: 10,
+      yMargin: 5
+    });
+
+    this.addChild(outOfRangePanel);
+
+    // Position it in the same place as before
+    outOfRangePanel.rightTop = new Vector2(constantPanel.right + 200, constantPanel.top + 80);
+
+    // Initially hide it
+    outOfRangePanel.visible = false;
+
+    // Link its visibility to resetDisableProb
+    model.resetDisableProb.link((isOutOfRange) => {
+      outOfRangePanel.visible = isOutOfRange;
+      resetAllButton.enabled = !isOutOfRange;
+      x0_value.fill = isOutOfRange ? 'red' : 'black';
+      y0_value.fill = isOutOfRange ? 'red' : 'black';
+    });
 
     // Position it next to the constantPanel
-    outOfRangeText.rightTop = new Vector2(constantPanel.right + 210, constantPanel.top + 30);
+    constantPanel.leftTop = new Vector2(10, constantPanel.top + 30);
+    // outOfRangeText.rightTop = new Vector2(310, constantPanel.top + 30);
 
     // Initially hide it
     outOfRangeText.visible = false;
@@ -606,8 +641,8 @@ export class SimScreenView extends ScreenView {
     });
 
 
-    equationPanel.leftTop = new Vector2(0, constantPanel.rightBottom.y + 5)
-    refPanel.leftTop = new Vector2(0, equationPanel.rightBottom.y + 5)
+    equationPanel.leftTop = new Vector2(10, constantPanel.rightBottom.y + 5)
+    refPanel.leftTop = new Vector2(10, equationPanel.rightBottom.y + 5)
 
     // resetAllButton.leftTop = new Vector2(equationPanel.rightBottom.x - 50, equationPanel.rightBottom.y + 10)
     speedPanel.leftTop = new Vector2(refPanel.leftBottom.x, refPanel.leftBottom.y + 5)
@@ -847,16 +882,90 @@ export class SimScreenView extends ScreenView {
       renderer.render(scene, camera);
     });
     this.passedStart = false
-    const reset = () => {
+    const reset = (action?: string) => {
 
-      model.reset()
+      model.reset(action)
       this.reset()
     }
 
 
 
 
+
+
+
+
+    let changing = false
+    let changingWithId = [false, -1]
+    for (const slider of constantSliders._children) {
+
+
+      if (slider !== simSpeedSlider) {
+        slider.addInputListener({
+
+          mousedown: function (event: { target: { _id: any; }; }) {
+
+
+
+
+            changing = true
+            changingWithId[0] = true;
+            changingWithId[1] = event.target._id
+
+          },
+
+
+
+
+
+        })
+      }
+    }
+    window.addEventListener("pointerup", () => {
+      if (changingWithId[0]) {
+
+        if (changingWithId[1] === 422) {
+          setTimeout(() => post(model.name, "x0 changed", model.xProp.value, model.yProp.value, model.v_xProp.value, model.v_yProp.value, model.omegaProp.value, model.xEQ, model.yEQ, model.v_xEQ, model.v_yEQ), 10)
+          changingWithId[0] = false
+          changingWithId[1] = -1
+        }
+        else if (changingWithId[1] === 437) {
+
+
+          setTimeout(() => post(model.name, "y0 changed", model.xProp.value, model.yProp.value, model.v_xProp.value, model.v_yProp.value, model.omegaProp.value, model.xEQ, model.yEQ, model.v_xEQ, model.v_yEQ), 10)
+          changingWithId[0] = false
+          changingWithId[1] = -1
+        }
+        else if (changingWithId[1] === 452) {
+
+
+          setTimeout(() => post(model.name, "v0_x changed", model.xProp.value, model.yProp.value, model.v_xProp.value, model.v_yProp.value, model.omegaProp.value, model.xEQ, model.yEQ, model.v_xEQ, model.v_yEQ), 10)
+          changingWithId[0] = false
+          changingWithId[1] = -1
+        }
+        else if (changingWithId[1] === 467) {
+
+
+          setTimeout(() => post(model.name, "v0_y changed", model.xProp.value, model.yProp.value, model.v_xProp.value, model.v_yProp.value, model.omegaProp.value, model.xEQ, model.yEQ, model.v_xEQ, model.v_yEQ), 10)
+          changingWithId[0] = false
+          changingWithId[1] = -1
+        }
+        else if (changingWithId[1] === 482) {
+
+
+          setTimeout(() => post(model.name, "omega changed", model.xProp.value, model.yProp.value, model.v_xProp.value, model.v_yProp.value, model.omegaProp.value, model.xEQ, model.yEQ, model.v_xEQ, model.v_yEQ), 10)
+          changingWithId[0] = false
+          changingWithId[1] = -1
+        }
+
+      }
+    })
+
+
+
+
     this.selectedRunProperty = new Property('History'); // This will persist even after rebuilding
+    this.programmaticallySettingRun = false;
 
     const listParent = new Node(); // Parent for the combo box
     let currentComboBox: Node | null = null; // To keep track of the current combo box
@@ -910,7 +1019,7 @@ export class SimScreenView extends ScreenView {
 
 
     this.selectedRunProperty.link(selected => {
-      if (selected.startsWith('Run ')) {
+      if (!this.programmaticallySettingRun && selected.startsWith('Run ')) {
         const index = parseInt(selected.replace('Run ', '')) - 1;
         const run = this.runHistory[index];
         if (run) {
@@ -932,7 +1041,7 @@ export class SimScreenView extends ScreenView {
 
           // this.restoreRun();  // Add this method next
           // this.restoringRun = true;
-          this.restoreRun()
+          this.restoreRun("Restoring from history");
           // this.reset();  // Add this method next
 
         }
@@ -952,7 +1061,7 @@ export class SimScreenView extends ScreenView {
 
 
 
-  public restoreRun(): void {
+  public restoreRun(action?: string): void {
     // Reset simulation without saving to history
     // this.pause = true
 
@@ -966,7 +1075,7 @@ export class SimScreenView extends ScreenView {
     this.v_xdotField.updateText(this.v_xdotLatex);
     this.v_ydotField.updateText(this.v_ydotLatex);
 
-    this.model.reset();
+    this.model.reset(action);
     this.scene.remove(this.arrowGroup)
     this.arrowGroup = new THREE.Group()
     this.scene.add(this.arrowGroup)
@@ -1109,7 +1218,7 @@ export class SimScreenView extends ScreenView {
 
 
 
-  public reset(): void {
+  public reset(action?: string): void {
 
 
     // this.xEQLatex = this.vdotxInput.mathField.latex();
@@ -1158,8 +1267,12 @@ export class SimScreenView extends ScreenView {
       // Update selected run to newest
 
 
+      // const currentRunNumber = this.runHistory.length;
+      // this.selectedRunProperty.value = `Run ${currentRunNumber}`;
       const currentRunNumber = this.runHistory.length;
+      this.programmaticallySettingRun = true;
       this.selectedRunProperty.value = `Run ${currentRunNumber}`;
+      this.programmaticallySettingRun = false;
 
     }
 
@@ -1167,7 +1280,7 @@ export class SimScreenView extends ScreenView {
 
 
     // Called when the user presses the reset-all button
-    this.model.reset()
+    this.model.reset(action)
     this.scene.remove(this.arrowGroup)
     this.arrowGroup = new THREE.Group()
     this.scene.add(this.arrowGroup)
@@ -1299,7 +1412,7 @@ export class SimScreenView extends ScreenView {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public step(dt: number): void {
     // Called every frame, with the time since the last frame in seconds
-   
+
 
 
     if (!this.pause) {
@@ -1313,7 +1426,7 @@ export class SimScreenView extends ScreenView {
         this.model.timer += dt * this.model.simSpeed;
       }
       if (this.model.timer <= 10) {
-        
+
         if (this.model.trailRefForceVectors && !this.model.trailTestForceVectors) {
           if (this.model.frameCount % 50 !== 0) {
             this.arrowGroup.remove(this.refCenArrow)
@@ -1431,7 +1544,7 @@ export class SimScreenView extends ScreenView {
             this.puckIRef.position.x = this.model.graphData.getXI(this.model.timer) + this.iOffset;
             this.puckIRef.position.y = this.model.graphData.getYI(this.model.timer) * -1;
             this.pathIRef.quadraticCurveTo(bufferXI, bufferYI, this.puckIRef.position.x, this.puckIRef.position.y);
-           
+
 
             this.puckRefRef.position.x = this.model.graphData.getX(this.model.timer) + this.refOffset;
             this.puckRefRef.position.y = this.model.graphData.getY(this.model.timer) * -1;
@@ -1440,14 +1553,14 @@ export class SimScreenView extends ScreenView {
           }
 
           // Update geometries and lines
-          
+
           const updateLine = (path: any, line: any, material: any) => {
             const points = path.getPoints();
             const geometry = new THREE.BufferGeometry().setFromPoints(points);
             this.scene.remove(line);
             line = new THREE.Line(geometry, material);
             line.computeLineDistances()
-           
+
             this.scene.add(line);
             return line;
           };
@@ -1477,7 +1590,7 @@ export class SimScreenView extends ScreenView {
           }
         };
 
-       
+
         if (Math.sqrt(this.model.graphData.getX(this.model.timer) ** 2 + this.model.graphData.getY(this.model.timer) ** 2) <= 175) {
           this.refDistanceCenterGraph.element.children[9].setAttribute('cx', this.xScaleD(this.model.timer));
           this.refDistanceCenterGraph.element.children[9].setAttribute('cy', this.yScaleD(this.model.graphData.getCor(this.model.timer)));

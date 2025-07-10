@@ -40,6 +40,8 @@ export class SimModel {
   simSpeedProp: Property<number>;
   xProp: Property<number>;
   resetDisableProb: Property<boolean>;
+  value_changedProb: Property<string>;
+  value_changed: string;
   public name: string | undefined | null;
   public action: any
 
@@ -104,6 +106,7 @@ export class SimModel {
     this.trailRefForceVectors = false;
     this.trailTestForceVectors = false;
     this.resetDisable = false;
+    this.value_changed = "";
 
 
     this.kProp = new Property(this.k);
@@ -292,7 +295,7 @@ export class SimModel {
     this.graphLenTest = this.graphDataTest.data.length * this.graphUpdateInterval;
     this.graphLen = this.graphData.data.length * this.graphUpdateInterval;
     if (value_changed !== "") {
-      value_changed === "Start" ? this.action = "" : null
+      value_changed === "Start" ? this.action = "" : value_changed
       setTimeout(() => post(this.name, value_changed, this.xProp.value, this.yProp.value, this.v_xProp.value, this.v_yProp.value, this.omegaProp.value, this.xEQ, this.yEQ, this.v_xEQ, this.v_yEQ), 10)
     }
 
