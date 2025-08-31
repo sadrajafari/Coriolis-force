@@ -1202,7 +1202,7 @@ export class SimScreenView extends ScreenView {
     window.addEventListener("pointerup", () => {
       if (changingWithId[0]) {
         console.log(changingWithId[1]);
-        if (changingWithId[1] === 422 || changingWithId[1] === 430) {
+        if (changingWithId[1] === 434 || changingWithId[1] === 442) {
           setTimeout(
             () =>
               post(
@@ -1222,7 +1222,8 @@ export class SimScreenView extends ScreenView {
           );
           changingWithId[0] = false;
           changingWithId[1] = -1;
-        } else if (changingWithId[1] === 437 || changingWithId[1] === 445) {
+          this.reset()
+        } else if (changingWithId[1] === 449 || changingWithId[1] === 457) {
           setTimeout(
             () =>
               post(
@@ -1242,7 +1243,8 @@ export class SimScreenView extends ScreenView {
           );
           changingWithId[0] = false;
           changingWithId[1] = -1;
-        } else if (changingWithId[1] === 452 || changingWithId[1] === 460) {
+          this.reset()
+        } else if (changingWithId[1] === 464 || changingWithId[1] === 472) {
           setTimeout(
             () =>
               post(
@@ -1262,7 +1264,8 @@ export class SimScreenView extends ScreenView {
           );
           changingWithId[0] = false;
           changingWithId[1] = -1;
-        } else if (changingWithId[1] === 467 || changingWithId[1] === 475) {
+          this.reset();
+        } else if (changingWithId[1] === 487 || changingWithId[1] === 479) {
           setTimeout(
             () =>
               post(
@@ -1282,7 +1285,8 @@ export class SimScreenView extends ScreenView {
           );
           changingWithId[0] = false;
           changingWithId[1] = -1;
-        } else if (changingWithId[1] === 482 || changingWithId[1] === 490) {
+          this.reset();
+        } else if (changingWithId[1] === 494 || changingWithId[1] === 502) {
           setTimeout(
             () =>
               post(
@@ -1302,6 +1306,7 @@ export class SimScreenView extends ScreenView {
           );
           changingWithId[0] = false;
           changingWithId[1] = -1;
+          this.reset();
         }
       }
     });
