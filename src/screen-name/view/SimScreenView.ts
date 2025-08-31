@@ -1201,7 +1201,6 @@ export class SimScreenView extends ScreenView {
     }
     window.addEventListener("pointerup", () => {
       if (changingWithId[0]) {
-        console.log(changingWithId[1]);
         if (changingWithId[1] === 434 || changingWithId[1] === 442) {
           setTimeout(
             () =>
