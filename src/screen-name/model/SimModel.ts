@@ -43,7 +43,8 @@ export class SimModel {
   value_changedProb: Property<string>;
   value_changed: string;
   public name: string | undefined | null;
-  public action: any
+  public action: any;
+  public paused: boolean = false;
 
 
 
@@ -107,6 +108,7 @@ export class SimModel {
     this.trailTestForceVectors = false;
     this.resetDisable = false;
     this.value_changed = "";
+    this.paused = false;
 
 
     this.kProp = new Property(this.k);

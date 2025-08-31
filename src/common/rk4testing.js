@@ -135,7 +135,8 @@ export function getGraphData(drag, dt, xinit, yinit, xdot, ydot, g, k, m, omega,
     // }
 
     // while (t < 10 ) {
-    while (t < 10 && findDistance(y[0], y[1]) <= 175) {
+    while (t < 20 && findDistance(y[0], y[1]) <= 175) {
+        
         let theta = omega * t;
         let x_inertial, y_inertial, vx_inertial, vy_inertial, x_rotating, y_rotating;
         y = rk4(y, dt, g, k, m, omega, coriolisEq, equations, useEval);
