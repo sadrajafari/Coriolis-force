@@ -26,6 +26,8 @@ import {
   Property,
   ToggleSwitch,
   CarouselComboBox,
+  RectangularToggleButton,
+  RectangularPushButton,
 } from "scenerystack";
 // @ts-ignore
 import EquationInput from "./EquationInput.js";
@@ -139,9 +141,10 @@ export class SimScreenView extends ScreenView {
     const resume = new Property<boolean>(false);
 
     const pauseSign = new Text("⏸︎", { fontSize: 25, maxWidth: 40 });
-    const pauseButton = new RoundToggleButton(pause, false, true, {
-      maxHeight: 100,
-      scale: 1.1,
+    const pauseButton = new RectangularToggleButton(pause, false, true, {
+      minHeight: 40,
+      minWidth: 40,
+      scale: 1,
       xAlign: "center",
       yAlign: "center",
       content: pauseSign,
@@ -150,9 +153,10 @@ export class SimScreenView extends ScreenView {
     // const ResumeButton = new RectangularToggleButton(resume, false, true, { minWidth: 140, maxHeight: 20, content: new RichText('▶'), baseColor: "#41b3d5" })
     const resumeSign = new Text("⏵︎", { fontSize: 25, maxWidth: 40 });
     // const ResumeButton = new RectangularToggleButton(resume, false, true, { minWidth: 140, maxHeight: 20, content: resumeSign, baseColor: "#41b3d5" })
-    const ResumeButton = new RoundToggleButton(resume, false, true, {
-      maxHeight: 120,
-      scale: 1.1,
+    const ResumeButton = new RectangularToggleButton(resume, false, true, {
+      minHeight: 40,
+      minWidth: 40,
+      scale: 1,
       xAlign: "center",
       yAlign: "center",
       content: resumeSign,
@@ -163,7 +167,8 @@ export class SimScreenView extends ScreenView {
 
     ResumeButton.visible = false;
 
-    const resetAllButton = new ResetAllButton({
+    const resetAllButton = new RectangularPushButton({
+      content: new Text("⏮", { fontSize: 20, fill: "black" }),
       listener: () => {
         this.interruptSubtreeInput();
         model.reset("Reset");
@@ -172,6 +177,8 @@ export class SimScreenView extends ScreenView {
         pauseButton.visible = true;
         ResumeButton.visible = false;
       },
+      minWidth: 40,
+      minHeight: 40,
       right: this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10,
     });
@@ -482,10 +489,10 @@ export class SimScreenView extends ScreenView {
                 content: new Text("✎", { fontSize: 120, maxWidth: 15 }),
               }),
               new Rectangle(0, 0, 20, 50),
+              resetAllButton,
+              new Rectangle(0, 0, 10, 0),
               pauseButton,
               ResumeButton,
-              new Rectangle(0, 0, 10, 0),
-              resetAllButton,
             ],
           }),
         ],
@@ -1201,7 +1208,8 @@ export class SimScreenView extends ScreenView {
     }
     window.addEventListener("pointerup", () => {
       if (changingWithId[0]) {
-        if (changingWithId[1] === 434 || changingWithId[1] === 442) {
+        console.log("changed slider with id ", changingWithId[1]);
+        if (changingWithId[1] === 433 || changingWithId[1] === 441) {
           setTimeout(
             () =>
               post(
@@ -1221,8 +1229,10 @@ export class SimScreenView extends ScreenView {
           );
           changingWithId[0] = false;
           changingWithId[1] = -1;
-          this.reset()
-        } else if (changingWithId[1] === 449 || changingWithId[1] === 457) {
+          if (model.resetDisableProb.value === false) {
+            this.reset();
+          }
+        } else if (changingWithId[1] === 448 || changingWithId[1] === 456) {
           setTimeout(
             () =>
               post(
@@ -1242,8 +1252,10 @@ export class SimScreenView extends ScreenView {
           );
           changingWithId[0] = false;
           changingWithId[1] = -1;
-          this.reset()
-        } else if (changingWithId[1] === 464 || changingWithId[1] === 472) {
+          if (model.resetDisableProb.value === false) {
+            this.reset();
+          }
+        } else if (changingWithId[1] === 463 || changingWithId[1] === 471) {
           setTimeout(
             () =>
               post(
@@ -1264,7 +1276,7 @@ export class SimScreenView extends ScreenView {
           changingWithId[0] = false;
           changingWithId[1] = -1;
           this.reset();
-        } else if (changingWithId[1] === 487 || changingWithId[1] === 479) {
+        } else if (changingWithId[1] === 486 || changingWithId[1] === 478) {
           setTimeout(
             () =>
               post(
@@ -1285,7 +1297,7 @@ export class SimScreenView extends ScreenView {
           changingWithId[0] = false;
           changingWithId[1] = -1;
           this.reset();
-        } else if (changingWithId[1] === 494 || changingWithId[1] === 502) {
+        } else if (changingWithId[1] === 493 || changingWithId[1] === 501) {
           setTimeout(
             () =>
               post(
