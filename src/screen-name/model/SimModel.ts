@@ -40,7 +40,6 @@ export class SimModel {
   simSpeedProp: Property<number>;
   xProp: Property<number>;
   resetDisableProb: Property<boolean>;
-  value_changedProb: Property<string>;
   value_changed: string;
   public name: string | undefined | null;
   public action: any;

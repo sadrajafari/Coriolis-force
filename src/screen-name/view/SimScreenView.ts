@@ -1100,6 +1100,7 @@ export class SimScreenView extends ScreenView {
       this.refCorArrowDir,
       origin,
       length,
+      // @ts-ignore
       "#027320",
       10,
       20,
@@ -2016,6 +2017,7 @@ export class SimScreenView extends ScreenView {
           this.refCorArrowDir,
           origin,
           magnitude * 50,
+          // @ts-ignore
           "#027320",
           magnitude * 20,
           magnitude * 10,
@@ -2061,6 +2063,7 @@ export class SimScreenView extends ScreenView {
           this.testCorArrowDir,
           originTest,
           magnitudeTest * 50,
+          // @ts-ignore
           "#027320",
           magnitudeTest * 20,
           magnitudeTest * 10,
