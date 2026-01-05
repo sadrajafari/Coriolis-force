@@ -1209,7 +1209,7 @@ export class SimScreenView extends ScreenView {
     }
     window.addEventListener("pointerup", () => {
       if (changingWithId[0]) {
-        console.log("changed slider with id ", changingWithId[1]);
+        
         if (changingWithId[1] === 433 || changingWithId[1] === 441) {
           setTimeout(
             () =>
