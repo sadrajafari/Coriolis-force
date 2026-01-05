@@ -1210,7 +1210,7 @@ export class SimScreenView extends ScreenView {
     window.addEventListener("pointerup", () => {
       if (changingWithId[0]) {
         
-        if (changingWithId[1] === 433 || changingWithId[1] === 441) {
+        if (changingWithId[1] === 434 || changingWithId[1] === 442) {
           setTimeout(
             () =>
               post(
@@ -1233,7 +1233,7 @@ export class SimScreenView extends ScreenView {
           if (model.resetDisableProb.value === false) {
             this.reset();
           }
-        } else if (changingWithId[1] === 448 || changingWithId[1] === 456) {
+        } else if (changingWithId[1] === 449 || changingWithId[1] === 457) {
           setTimeout(
             () =>
               post(
@@ -1256,7 +1256,7 @@ export class SimScreenView extends ScreenView {
           if (model.resetDisableProb.value === false) {
             this.reset();
           }
-        } else if (changingWithId[1] === 463 || changingWithId[1] === 471) {
+        } else if (changingWithId[1] === 464 || changingWithId[1] === 472) {
           setTimeout(
             () =>
               post(
@@ -1277,7 +1277,7 @@ export class SimScreenView extends ScreenView {
           changingWithId[0] = false;
           changingWithId[1] = -1;
           this.reset();
-        } else if (changingWithId[1] === 486 || changingWithId[1] === 478) {
+        } else if (changingWithId[1] === 487 || changingWithId[1] === 479) {
           setTimeout(
             () =>
               post(
@@ -1298,7 +1298,7 @@ export class SimScreenView extends ScreenView {
           changingWithId[0] = false;
           changingWithId[1] = -1;
           this.reset();
-        } else if (changingWithId[1] === 493 || changingWithId[1] === 501) {
+        } else if (changingWithId[1] === 494 || changingWithId[1] === 502) {
           setTimeout(
             () =>
               post(
