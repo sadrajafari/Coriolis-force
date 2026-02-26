@@ -5,20 +5,19 @@
  * @author Sadra Jafari Ghalehkohneh
  */
 
-// import { RichText, Text, VBox } from '../../../../scenery/js/imports.js';
-import { RichText, Tandem } from 'scenerystack';
+import { RichText, Tandem, TextPushButton } from 'scenerystack';
 import {VBox} from 'scenerystack/scenery'
 import { Dialog } from 'scenerystack/sim';
-// import Dialog from '../../../../sun/js/Dialog.js';
-// import Tandem from '../../../../tandem/js/Tandem.js';
-// import coriolisForce from '../../coriolisForce.js';
+
 
 
 const MAX_WIDTH = 800; 
 
 export default class DiscreteInfoDialog extends Dialog {
 
-  public constructor( tandem: Tandem ) {
+  public constructor( tandem: Tandem,
+    onFillEquations?: ( equations: { x: string; y: string; v_x: string; v_y: string } ) => void
+   ) {
 
     const titleText = new RichText( "Guide For Writing In The Equation Boxes", {
       maxWidth: MAX_WIDTH
@@ -40,9 +39,24 @@ export default class DiscreteInfoDialog extends Dialog {
 
     
     const children = stringProperties.map( stringProperty => new RichText( stringProperty ) );
+     const fillEquationsButton = new TextPushButton( 'Fill Correct Equations', {
+      listener: () => {
+        const correctEquations = {
+          x: 'v_x',           // ẋ' = v_x
+          y: 'v_y',           // ẏ' = v_y
+          v_x: '2\\cdot o\\cdot v_y+o^2\\cdot x',  // v̇_x' = -2Ωv_y + Ω²x
+          v_y: '-2\\cdot o\\cdot v_x+o^2\\cdot y'    // v̇_y' = 2Ωv_x + Ω²y
+        };
+
+        if ( onFillEquations ) {
+          onFillEquations( correctEquations );
+        }
+        console.log( 'Filled all equations with correct values' );
+      }
+    } );
 
     const content = new VBox( {
-      children: children,
+      children: [...children, fillEquationsButton],
       align: 'left',
       spacing: 11
     } );

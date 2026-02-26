@@ -40,6 +40,9 @@ import { verifyEq } from "../../common/verifyEq.js";
 // @ts-ignore
 import post from "../../common/postData.js";
 import DiscreteInfoDialog from "./DiscreteInfoDialog.js";
+import HelpDialog from "./HelpDialog.ts";
+// @ts-ignore
+import { questionButton } from "./questionSign.js";
 
 export class SimScreenView extends ScreenView {
   domNode: any;
@@ -755,6 +758,14 @@ export class SimScreenView extends ScreenView {
       options && options.tandem
         ? options.tandem.createTandem("infoDialog")
         : undefined,
+      (equations) => {
+        this.xdotField.updateText(equations.x);
+        this.ydotField.updateText(equations.y);
+        this.v_xdotField.updateText(equations.v_x);
+        this.v_ydotField.updateText(equations.v_y);
+        infoDialog.hide();
+        this.reset();
+      },
     );
 
     // Button to open the dialog
@@ -766,6 +777,37 @@ export class SimScreenView extends ScreenView {
       tandem: options?.tandem?.createTandem("infoButton"),
     });
     // this.addChild(infoButton)
+    // Info button for equation help
+    const fillEquationsCallback = (equations: {
+      x: string;
+      y: string;
+      vy: string;
+      vx: string;
+    }) => {
+      // Update the velocity equation field
+      this.xdotField.mathField.latex(equations.x);
+      this.ydotField.mathField.latex(equations.y);
+      this.v_xdotField.mathField.latex(equations.vx);
+      this.v_ydotField.mathField.latex(equations.vy);
+
+      this.model.xEQ = equations.x;
+      this.model.yEQ = equations.y;
+      this.model.v_xEQ = equations.vx;
+      this.model.v_yEQ = equations.vy;
+
+      this.reset();
+    };
+    const helpDialog = new HelpDialog(this.tandem, fillEquationsCallback);
+
+    const questionNode = questionButton();
+
+    // const helpDialog = new HelpDialog(undefined as any);
+
+    questionNode.addInputListener({
+      down: () => {
+        helpDialog.show();
+      },
+    });
 
     let equationPanel = new Panel(
       new VBox({
@@ -777,7 +819,7 @@ export class SimScreenView extends ScreenView {
             children: [
               new RichText("Test Equations"),
               new Rectangle(0, 0, 10, 0),
-              infoButton,
+              questionNode,
             ],
           }),
 
