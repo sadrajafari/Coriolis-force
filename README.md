@@ -5,7 +5,6 @@ Coriolis Force
 Interactive Simulations</a>
 at the University of Colorado Boulder.
 
-*This simulation is under development and has not been published.*
 
 ### Documentation
 
